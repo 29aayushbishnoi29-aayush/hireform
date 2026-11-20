@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hireform — AI resume builder</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<!-- ============ auth ============ -->
+<section id="auth" class="auth">
+  <div class="auth-card">
+    <div class="brand">Hireform</div>
+    <p class="tagline">A guided form in, an ATS-friendly PDF out. Five templates, AI rewriting, job-description tailoring.</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Log in</button>
+      <button class="tab" data-tab="signup">Create account</button>
+    </div>
+    <form id="auth-form" autocomplete="on">
+      <label>Email<input type="email" name="email" required placeholder="you@example.com"></label>
+      <label>Password<input type="password" name="password" required minlength="8" placeholder="8+ characters"></label>
+      <button class="primary" type="submit" id="auth-submit">Log in</button>
+      <p class="err" id="auth-err" role="alert"></p>
+    </form>
+    <p class="fine">Free plan: 2 saved versions, 5 AI edits. Pro removes both limits.</p>
+  </div>
+</section>
+
+<!-- ============ app ============ -->
+<section id="main" class="main hidden">
+  <header class="topbar">
+    <div class="brand small">Hireform</div>
+    <div class="topbar-right">
+      <span class="badge" id="plan-badge">Free</span>
+      <button class="ghost" id="btn-upgrade">Upgrade</button>
+      <button class="ghost" id="btn-logout">Log out</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- left: versions -->
+    <aside class="sidebar">
+      <div class="side-head">
+        <span>Saved versions</span>
+        <button class="icon" id="btn-new" title="New resume">+</button>
+      </div>
+      <ul id="versions"></ul>
+      <div class="side-foot" id="ai-left"></div>
+    </aside>
+
+    <!-- middle: form -->
+    <main class="editor">
+      <div class="editor-head">
+        <input id="resume-title" class="title-input" value="My resume" aria-label="Resume name">
+        <div class="actions">
+          <button class="ghost" id="btn-save">Save</button>
+          <button class="primary" id="btn-preview">Preview PDF</button>
+        </div>
+      </div>
+
+      <label class="row">Template
+        <select id="template">
+          <option value="classic">Classic</option>
+          <option value="sb2nov">sb2nov</option>
+          <option value="moderncv">moderncv</option>
+          <option value="engineeringresumes">Engineering resumes</option>
+          <option value="engineeringclassic">Engineering classic</option>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Contact</legend>
+        <div class="grid2">
+          <label>Full name<input id="f-name" placeholder="Aayush Bishnoi"></label>
+          <label>Location<input id="f-location" placeholder="Bengaluru, India"></label>
+          <label>Email<input id="f-email" type="email" placeholder="you@example.com"></label>
+          <label>Phone<input id="f-phone" placeholder="+91 90000 00000"></label>
+        </div>
+        <label>Website / LinkedIn<input id="f-website" placeholder="linkedin.com/in/you"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Summary</legend>
+        <textarea id="f-summary" rows="4" placeholder="Two or three lines: who you are, your strongest evidence, what you want next."></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Experience <button class="icon add" data-add="exp">+ role</button></legend>
+        <div id="exp-list"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Education <button class="icon add" data-add="edu">+ school</button></legend>
+        <div id="edu-list"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Skills <button class="icon add" data-add="skill">+ group</button></legend>
+        <div id="skill-list"></div>
+      </fieldset>
+
+      <fieldset class="tailor">
+        <legend>Tailor to a job</legend>
+        <textarea id="f-jd" rows="5" placeholder="Paste the job description here (50+ characters)."></textarea>
+        <button class="secondary" id="btn-tailor">Tailor resume</button>
+        <p class="hint hidden" id="tailor-note">AI is switched off on this server, so rewriting and tailoring are unavailable. Everything else works normally.</p>
+        <p class="hint" id="missing"></p>
+      </fieldset>
+    </main>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <h3 id="modal-title">Preview</h3>
+    <iframe id="pdf-frame" title="Resume preview"></iframe>
+    <div class="modal-actions">
+      <a class="primary" id="btn-download" download="resume.pdf" href="#">Download PDF</a>
+      <button class="ghost" id="btn-close-modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

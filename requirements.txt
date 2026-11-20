@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+rendercv[full]
+anthropic
+stripe
+bcrypt
+itsdangerous
+python-dotenv
+pyyaml
